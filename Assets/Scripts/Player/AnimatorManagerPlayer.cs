@@ -45,13 +45,6 @@ public class AnimatorManagerPlayer : Singleton<AnimatorManagerPlayer>
     }
 
 
-    public void Update()
-    {
-        if (stateMachines.currentstate != null)
-        {
-            //stateMachines.currentstate;
-        }
-    }
 
     public void Play(AnimationType type, float currentSpeedFactor = 1)
         {

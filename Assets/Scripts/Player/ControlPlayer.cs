@@ -139,7 +139,7 @@ namespace Player {
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (InPlataform == true)
+               if (InPlataform == true)
                 {
                     myRigidbody.velocity = Vector3.up * soPlayerSetup.forcejump;
                     if (songjump != null)
