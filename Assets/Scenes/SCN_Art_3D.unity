@@ -10325,6 +10325,18 @@ MonoBehaviour:
   - type: 1
     trigger: idle
     speed: 1
+  - type: 2
+    trigger: run
+    speed: 1
+  - type: 3
+    trigger: jump
+    speed: 1
+  - type: 4
+    trigger: downjump
+    speed: 1
+  - type: 5
+    trigger: dead
+    speed: 1
 --- !u!1001 &1511199103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13032,6 +13044,7 @@ MonoBehaviour:
   soPlayerSetup: {fileID: 11400000, guid: 39e71b53653c85a4c9d4cf93a4e0a784, type: 2}
   InPlataform: 0
   down: 0
+  run: 0
   myRigidbody: {fileID: 1771076474}
   DetectPlataform: {fileID: 253062105}
   MaskPlataform:
@@ -13039,8 +13052,6 @@ MonoBehaviour:
     m_Bits: 64
   triggerInteraction: 1
   songjump: {fileID: 0}
-  _currentTopSpeed: 0
-  _currentNowSpeed: 0
 --- !u!54 &1771076474
 Rigidbody:
   m_ObjectHideFlags: 0

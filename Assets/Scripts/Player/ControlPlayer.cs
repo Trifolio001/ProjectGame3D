@@ -12,6 +12,7 @@ namespace Player {
 
         public bool InPlataform = false;
         public bool down = false;
+        public bool run = false;
         public Rigidbody myRigidbody;
 
 
@@ -24,21 +25,20 @@ namespace Player {
         //public AudioRandomPlayAudioClips audiorandom;
         public AudioSource songjump;
 
-        public float _currentTopSpeed;
-        public float _currentNowSpeed;
+        private float _currentTopSpeed;
+        private float _currentNowSpeed;
 
 
         // Start is called before the first frame update
         void Start()
         {
-
+            run = false;
             down = false;
         }
 
         void Update()
         {
             controls();
-            //InPlataform = PhysicsD.OverlapCircle(DetectPlataform.position, 0.5f, MaskPlataform);
             InPlataform = Physics.CheckSphere(DetectPlataform.position, 0.5f, MaskPlataform, triggerInteraction);
 
             if (InPlataform)
@@ -52,10 +52,20 @@ namespace Player {
                     tocaaudio();
                     Invoke(nameof(tocaaudio), 0.1f);
                 }*/
+                if (!run)
+                {
+                    AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.IDLE);
+                }else{
+                    AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.RUN);
+                }
                 down = false;
             }
             else
             {
+                if (!down)
+                {
+                    AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.JUMPUP);
+                }
                 /*if (_curretPlayerLegs.GetBool(soPlayerSetup.boolJump) == false)
                 {
                     _curretPlayerLegs.SetBool(soPlayerSetup.TrigerJump, true);
@@ -69,8 +79,10 @@ namespace Player {
                 /*_curretPlayerLegs.SetBool(soPlayerSetup.boolJumpDown, true);
                 _curretPlayerArms.SetBool(soPlayerSetup.boolJumpDown, true);*/
                 //if (_curretPlayerLegs.GetBool(soPlayerSetup.boolJump) == true)
-                if(!InPlataform) 
+                if(!InPlataform && !down) 
                 {
+
+                    AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.JUMPDOWN);
                     down = true;
                 }
             }
@@ -115,7 +127,17 @@ namespace Player {
                 transform.Rotate(-soPlayerSetup.forceRotate * Time.deltaTime);
             }
 
-                if (Input.GetKeyDown(KeyCode.Space))
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                run = true;
+            }
+            else
+            {
+                run = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (InPlataform == true)
                 {

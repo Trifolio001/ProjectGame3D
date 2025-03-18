@@ -7,7 +7,7 @@ using Player;
 
 
 
-    public class AnimatorManagerPlayer : Singleton<AnimatorManagerPlayer>
+public class AnimatorManagerPlayer : Singleton<AnimatorManagerPlayer>
 {
     public enum AnimationType
     {
@@ -44,7 +44,7 @@ using Player;
         stateMachines.Switchstate(AnimationType.IDLE);
     }
 
-        public void Play(AnimationType type, float currentSpeedFactor = 1)
+       public void Play(AnimationType type, float currentSpeedFactor = 1)
         {
             foreach (var animation in stateAnimator)
             {
@@ -66,4 +66,5 @@ using Player;
             public string trigger;
             public float speed = 1f;
         }
-    }
+     
+}

@@ -1,9 +1,13 @@
 //using Player;
 using Ebac.StateMachine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Audio;
+using Player;
 
 public class GMAnimatorIdle : StateBase
 {
-
 }
 
 
