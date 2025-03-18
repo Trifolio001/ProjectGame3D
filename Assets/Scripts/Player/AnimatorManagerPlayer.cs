@@ -44,7 +44,16 @@ public class AnimatorManagerPlayer : Singleton<AnimatorManagerPlayer>
         stateMachines.Switchstate(AnimationType.IDLE);
     }
 
-       public void Play(AnimationType type, float currentSpeedFactor = 1)
+
+    public void Update()
+    {
+        if (stateMachines.currentstate != null)
+        {
+            //stateMachines.currentstate;
+        }
+    }
+
+    public void Play(AnimationType type, float currentSpeedFactor = 1)
         {
             foreach (var animation in stateAnimator)
             {
