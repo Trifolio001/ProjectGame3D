@@ -1,0 +1,90 @@
+{
+    "name": "Inputs",
+    "maps": [
+        {
+            "name": "GamePlay",
+            "id": "5e2fc7ce-9e4f-4d61-91b5-f7f936b63b82",
+            "actions": [
+                {
+                    "name": "Shoot1",
+                    "type": "Button",
+                    "id": "168e150c-701b-4df4-b01b-8b7957185730",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Gun1",
+                    "type": "Button",
+                    "id": "2cf1cbe3-e446-4705-a2b9-58413a287189",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Gun2",
+                    "type": "Button",
+                    "id": "1f20eddf-57ae-4896-a71b-ceb170d23670",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Gun3",
+                    "type": "Button",
+                    "id": "0c8a0fbc-39c4-43a3-8419-32b984812760",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "abcd3a36-2ced-45de-a589-5de70a0adf3d",
+                    "path": "<Keyboard>/x",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b594264-c174-4a7a-b88c-2ca0a2bb6d07",
+                    "path": "<Keyboard>/1",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gun1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef205418-0135-473a-823b-52782cd589f9",
+                    "path": "<Keyboard>/2",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gun2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2c1e1f46-34c2-4c2a-a41c-f7f9aaf2cb2b",
+                    "path": "<Keyboard>/3",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gun3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

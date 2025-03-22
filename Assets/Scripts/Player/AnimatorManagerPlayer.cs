@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ebac.core.Singleton;
 using Ebac.StateMachine;
-using Player;
+//using Player;
 
 
 

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using Player;
+//using Player;
 
 public class GMAnimatorIdle : StateBase
 {
