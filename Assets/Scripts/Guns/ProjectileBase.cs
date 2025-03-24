@@ -6,6 +6,7 @@ public class ProjectileBase : MonoBehaviour
 {
     //public Vector3 direction;
     //public SOBullet soBullet;
+
     public float timeToDestroy = 2f;
 
     public int damegeAmount = 1;
@@ -30,17 +31,20 @@ public class ProjectileBase : MonoBehaviour
         transform.localScale = new Vector3(side, 1, 1);
     }*/
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        /*var enimy = collision.transform.GetComponent<HealthBase>();
+        var enimy = collision.transform.GetComponent<IDamageable>();
+
+        //var enimy = collision.transform.GetComponent<Enimy.EnemyBase>();
 
         if(enimy != null)
         {
             VFXBullet();
-            enimy.Damage(soBullet.damage);
+            enimy.Damage(damegeAmount, transform);
             Destroy(gameObject);
-        }*/
+        }
     }
+
 
     public void VFXBullet()
     {

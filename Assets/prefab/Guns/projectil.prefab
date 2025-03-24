@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7159688816782226442}
   - component: {fileID: 7159688816782226445}
+  - component: {fileID: 7461218605162021529}
   m_Layer: 8
   m_Name: projectil
   m_TagString: Untagged
@@ -44,9 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37383e4163629c545a207e850403afa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroy: 2
+  timeToDestroy: 9
   damegeAmount: 1
   speed: 50
+--- !u!135 &7461218605162021529
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159688816782226444}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.28
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7159688817672798097
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +152,7 @@ SphereCollider:
   m_GameObject: {fileID: 7159688817672798097}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

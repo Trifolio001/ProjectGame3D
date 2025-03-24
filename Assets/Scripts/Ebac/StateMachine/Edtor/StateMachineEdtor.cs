@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(FSMexemple))]
+//[CustomEditor(typeof(FSMexemple))]
 public class StateMachineEdtor : Editor
 {
     public bool showFolDout;
