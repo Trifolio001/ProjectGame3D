@@ -8,6 +8,7 @@ public class GunBase : MonoBehaviour
     public Transform positionToShoot;
     public float timeBetweenShoot = .3f;
     public float speed = 50f;
+    //public bool DesactivateChoot = false;
     //public bool recharge = false;
 
     //public Transform PlayerSideReference;
@@ -39,7 +40,7 @@ public class GunBase : MonoBehaviour
     }
 
     public void startShoot()
-    {
+    {        
         stopShoot();
         _currentCoroutine = StartCoroutine(ShootCoroutine());
     }

@@ -6,7 +6,7 @@ namespace Ebac.StateMachine
 {
     public class StateBase 
     {
-        public virtual void onstateEnter(object o = null)
+        public virtual void onstateEnter(params object[] objs)
         {
 
         }

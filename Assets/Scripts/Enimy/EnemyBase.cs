@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Animation;
 
-namespace Enimy
+namespace Enemy
 {
     public class EnemyBase : MonoBehaviour, IDamageable
     {
@@ -13,6 +13,11 @@ namespace Enimy
         public int StarLife = 10;
         private int _currentLife;
         protected bool _isDead = false;
+        public bool lookAtPlayer = false;
+
+        [Header("Effect Recoil")]
+        public bool activeRecoil = true;
+        public float forceRecoil = 1;
 
         [Header("Animation")]
         public ScriptAnimation animationBase;
@@ -22,7 +27,7 @@ namespace Enimy
         public float timeDestroyed = 4f;
         public ParticleSystem particleDamage = null;
 
-
+        private PlayerControl _player;
         public FlashColor _flashcolor;
 
 
@@ -35,6 +40,10 @@ namespace Enimy
             }
         }
 
+        private void Start()
+        {
+            _player = GameObject.FindObjectOfType<PlayerControl>();
+        }
         protected virtual void Init()
         {
             ResetLife();
@@ -50,14 +59,24 @@ namespace Enimy
             _currentLife = StarLife;
         }
 
-        public void OnDamage(int damage, Transform pos)
+
+
+        public void OnDamage(int damage, Transform pos, bool recoil)
         {
             if (_flashcolor != null)
             {
                 _flashcolor.Flash();
             }
+            if (recoil && activeRecoil)
+            {
+                Vector3 dir = transform.position - pos.transform.position;
+                dir = -dir.normalized;
+                transform.position -= dir * forceRecoil;
+            }
             if (particleDamage != null)
             {
+                particleDamage.transform.position = pos.position;
+                particleDamage.transform.rotation = Quaternion.Euler(pos.rotation.x + 180, pos.rotation.y, pos.rotation.z);
                 particleDamage.Play();
             }
             if (_isDead) return;
@@ -145,10 +164,40 @@ namespace Enimy
             animationBase.PlayAnimationByTrigger(animationTipe);
         }
 
+        public void Damage(int damage)
+        {
+
+        }
         public void Damage(int damage, Transform pos)
         {
-            OnDamage(damage, pos);               
+
+        }
+
+        public void Damage(int damage, Transform pos, bool recoil)
+        {
+            OnDamage(damage, pos, recoil);               
         }
         #endregion
+
+        private void OnTriggerStay(Collider collision)
+        {
+            PlayerControl p = collision.transform.GetComponent<PlayerControl>();
+
+            if(p != null)
+            {
+                p.Damage(1);
+            }
+        }
+
+
+        public virtual void Update()
+        {
+            if (lookAtPlayer && (_player != null))
+            {
+                transform.LookAt(new Vector3(_player.transform.position.x, _player.transform.position.y - 3,  _player.transform.position.z));
+            }
+        }
+
     }
+
 }

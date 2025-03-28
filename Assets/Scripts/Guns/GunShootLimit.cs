@@ -32,7 +32,10 @@ public class GunShootLimit : GunBase
             {
                 Shoot();
                 _currentShots++;
-                playershot.ListSlotsGuns[referenceSlot].bullets = _currentShots;
+                if (playershot != null)
+                {
+                    playershot.ListSlotsGuns[referenceSlot].bullets = _currentShots;
+                }
                 CheckReCharge(); 
                 UpdateUi();
                 yield return new WaitForSeconds(timeBetweenShoot);
@@ -64,8 +67,12 @@ public class GunShootLimit : GunBase
             uiGunUpdate.ForEach(i => i.UpdateValue(time/timetoRechange));
             yield return new WaitForEndOfFrame();
         }
-        _currentShots = 0; 
-        playershot.ListSlotsGuns[referenceSlot].bullets = 0;
+        _currentShots = 0;
+
+        if (playershot != null)
+        {
+            playershot.ListSlotsGuns[referenceSlot].bullets = 0;
+        }
         recharging = false;
     }
 

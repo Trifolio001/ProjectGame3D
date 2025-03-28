@@ -29,12 +29,12 @@ namespace Ebac.StateMachine
             dictionarystate.Add(typeEnum, state);
         }
 
-        public void Switchstate(T state)
+        public void Switchstate(T state, params object[] objs)
         {
             if (_currentState != null) _currentState.onstateExit();
 
             _currentState = dictionarystate[state];
-            _currentState.onstateEnter();
+            _currentState.onstateEnter(objs);
         }
 
         public void update()

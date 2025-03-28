@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour , IDamageable
 {
     public CharacterController characterController;
     public float aceleration = 1f;
@@ -12,8 +12,8 @@ public class PlayerControl : MonoBehaviour
     public float jumpSpeed = 15f;
     public Animator animator; 
     private float vSpeed = 0f;
+    public List<FlashColor> _flashcolor;
 
-   
 
     public KeyCode jumpKeycode = KeyCode.Space;
     [Header("Run Setup")] 
@@ -21,8 +21,21 @@ public class PlayerControl : MonoBehaviour
     public float speedRun = 1.5f;
 
 
+    [Header("Damage Enimy")]
+    public float durationStopDamage = 0.2f;
     private float _currentTopSpeed;
     private float _currentNowSpeed;
+    private List<ColorChange> colorChange;
+    private bool ReferencetimeDamage = false;
+
+    private void Start()
+    {
+        colorChange = new List<ColorChange>();
+        foreach (var child in gameObject.GetComponentsInChildren<ColorChange>())
+        {
+            colorChange.Add(child);
+        }
+    }
 
 
     void Update()
@@ -101,5 +114,45 @@ public class PlayerControl : MonoBehaviour
         var speedVector = transform.forward * inputAxisVertical * _currentNowSpeed;
         speedVector.y = vSpeed;
         characterController.Move(speedVector * Time.deltaTime);
+    }
+
+    private void FeedBackDamage()
+    {
+        for (int i = 0; i < colorChange.Count; i++)
+        {
+            colorChange[i].InitiateAnimate((durationStopDamage/2));
+        }
+    }
+
+#region IDamage
+    public void Damage(int damage)
+    {
+        ConfirmDamage();
+    }
+
+    public void Damage(int damage, Transform pos)
+    {
+        ConfirmDamage();
+    }
+
+    public void Damage(int damage, Transform pos, bool recoil)
+    {
+        ConfirmDamage();
+    }
+    #endregion
+
+    private void ConfirmDamage()
+    {
+        if (!ReferencetimeDamage)
+        {
+            ReferencetimeDamage = true;
+            FeedBackDamage();
+            Invoke(nameof(OperaçãodeTempoDamage), durationStopDamage + 0.1f);
+        }
+    }
+
+    public void OperaçãodeTempoDamage()
+    {
+        ReferencetimeDamage = false;
     }
 }

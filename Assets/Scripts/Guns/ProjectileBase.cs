@@ -7,12 +7,16 @@ public class ProjectileBase : MonoBehaviour
     //public Vector3 direction;
     //public SOBullet soBullet;
 
+
     public float timeToDestroy = 2f;
 
     public int damegeAmount = 1;
 
     public float speed = 50f;
 
+    public bool recoil = true;
+
+    public List<string> tagsToHit;
 
     void Update()
     {
@@ -33,16 +37,24 @@ public class ProjectileBase : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        var enimy = collision.transform.GetComponent<IDamageable>();
-
-        //var enimy = collision.transform.GetComponent<Enimy.EnemyBase>();
-
-        if(enimy != null)
+        foreach(var t in tagsToHit)
         {
-            VFXBullet();
-            enimy.Damage(damegeAmount, transform);
-            Destroy(gameObject);
+            if(collision.transform.tag == t)
+            {
+                var damageable = collision.transform.GetComponent<IDamageable>();
+
+                if (damageable != null)
+                {
+                    VFXBullet();
+                    damageable.Damage(damegeAmount, transform, recoil);
+                    
+                    
+                }
+                Destroy(gameObject);
+                break;
+            }
         }
+        
     }
 
 

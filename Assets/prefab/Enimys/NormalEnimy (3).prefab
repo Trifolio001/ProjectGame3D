@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 480178047401750602}
   m_Layer: 0
   m_Name: NormalEnimy (3)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -431,6 +431,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collider: {fileID: 808785269745515803}
   StarLife: 5
+  activeRecoil: 1
+  forceRecoil: 1
   animationBase: {fileID: 1693793419296433163}
   startAnimationDuration: 20
   startAnimationEase: 27
@@ -1212,7 +1214,7 @@ GameObject:
   - component: {fileID: 2240068281477919370}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

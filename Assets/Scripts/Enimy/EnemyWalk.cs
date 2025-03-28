@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enimy
+namespace Enemy
 {
-    public class EnimyWalk : EnemyBase
+    public class EnemyWalk : EnemyBase
     {
         [Header("waypoints")]
         public GameObject[] waypoints;
@@ -13,8 +13,9 @@ namespace Enimy
 
         private int _index;
 
-        private void Update()
+        public override void Update()
         {
+            base.Update();
             if (!_isDead)
             {
                 if (Vector3.Distance(transform.position, new Vector3(waypoints[_index].transform.position.x, transform.position.y, waypoints[_index].transform.position.z)) < minDistance)
