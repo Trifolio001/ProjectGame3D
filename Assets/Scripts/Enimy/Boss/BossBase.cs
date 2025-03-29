@@ -16,7 +16,7 @@ namespace Boss
         DEATH
     }
 
-    public class BossBase : MonoBehaviour, IDamageable
+    public class BossBase : MonoBehaviour
     {
         [Header("Animation")]
         public float startAnimationDuration = 0.5f;
@@ -24,8 +24,10 @@ namespace Boss
 
 
         [Header("Attack")]
+        public int damageBoss = 5;
         public float attackAmount = 5f;
         public float timeBetweenAttack = 1f;
+        public float rangeSpikes = 3f;
         public GameObject spikesGroup;
         private PlayerControl _player;
         public bool lookAtPlayer = false;
@@ -38,11 +40,19 @@ namespace Boss
 
         private int a = 0;
 
+        public List<string> tagsToHit;
+        public List<FlashColor> flashcolor;
+        private bool kill = false;
+
         private void Awake()
         {
             Init();
-            healthBase.onKillHit += OnBossKill;
+            healthBase.onDamage += Damage;
+            healthBase.onKill += OnBossKill;
         }
+
+
+
         private void Init()
         {
             stateMachine = new StateMachine<BossAction>();
@@ -67,24 +77,20 @@ namespace Boss
         public void GoToRandomPoint(Action OnArrive = null)
         {
             
-            Debug.Log("entrou random");
             StartCoroutine(GoToPointCorotine(wayPoints[a = UnityEngine.Random.Range(0, wayPoints.Count)], OnArrive));
         }
 
         IEnumerator GoToPointCorotine(Transform t, Action onArrive = null)
         {
 
-            Debug.Log("entrou corotine com " + a + " == " + (Vector3.Distance(transform.position, t.position) > 1f));
 
             while (Vector3.Distance(transform.position, new Vector3(t.transform.position.x, transform.position.y, t.transform.position.z)) > 1f)
             {
 
-                Debug.Log("entrou verificar " + (Vector3.Distance(transform.position, t.position) > 1f));
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(t.transform.position.x, transform.position.y, t.transform.position.z), Time.deltaTime * speed);
                 yield return new WaitForEndOfFrame();
             }
 
-            Debug.Log("Acabo");
             SwitchState(BossAction.ATTACK);
         }
         #endregion
@@ -101,13 +107,11 @@ namespace Boss
             int attacks = 0;
             while(attacks < attackAmount)
             {
-                Debug.Log("asfdasfa " + attacks + " = " + attackAmount);
                 attacks++;
                 transform.DOScale(1.5f, 1).SetLoops(2, LoopType.Yoyo);
-                spikesGroup.transform.DOScale(3, 1).SetLoops(2, LoopType.Yoyo);
+                spikesGroup.transform.DOScale(rangeSpikes, 1).SetLoops(2, LoopType.Yoyo);
                 yield return new WaitForSeconds(timeBetweenAttack);
             }
-            Debug.Log("chamo");
             SwitchState(BossAction.WALK);
 
         }
@@ -152,32 +156,42 @@ namespace Boss
 
         private void OnTriggerStay(Collider collision)
         {
-            PlayerControl p = collision.transform.GetComponent<PlayerControl>();
 
-            if (p != null)
+            foreach (var t in tagsToHit)
             {
-                p.Damage(1);
+                IDamageable p = collision.transform.GetComponent<IDamageable>();
+
+                if (p != null)
+                {
+                    p.Damage(damageBoss, null, false, false);
+                }
+            }
+        }
+
+
+        public void Damage(HealthBase h)
+        {
+            if (flashcolor != null)
+            {
+                flashcolor.ForEach(i => i.Flash());
             }
         }
 
         private void OnBossKill(HealthBase h)
         {
+            if (!kill)
+            {
+                //animator.SetTrigger("Death");
+                OnKill();
+                kill = true;
+            }
             SwitchState(BossAction.DEATH);
         }
-
-        void IDamageable.Damage(int damage)
+        public void OnKill()
         {
-            healthBase.OnDamage(damage, null, false);
+            Destroy(gameObject, 4f);
         }
 
-        void IDamageable.Damage(int damage, Transform pos)
-        {
-            healthBase.OnDamage(damage, null, false);
-        }
 
-        void IDamageable.Damage(int damage, Transform pos, bool recoil)
-        {
-            healthBase.OnDamage(damage, null, false);
-        }
     }
 }

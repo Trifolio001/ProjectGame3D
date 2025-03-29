@@ -16,6 +16,8 @@ public class ProjectileBase : MonoBehaviour
 
     public bool recoil = true;
 
+    public bool continuosDamage = true;
+
     public List<string> tagsToHit;
 
     void Update()
@@ -46,8 +48,7 @@ public class ProjectileBase : MonoBehaviour
                 if (damageable != null)
                 {
                     VFXBullet();
-                    damageable.Damage(damegeAmount, transform, recoil);
-                    
+                    damageable.Damage(damegeAmount, transform, recoil, continuosDamage);                    
                     
                 }
                 Destroy(gameObject);

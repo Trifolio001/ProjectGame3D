@@ -39,7 +39,6 @@ namespace Boss
     {
         public override void onstateEnter(params object[] objs)
         {
-            Debug.Log("entrou onstate walk");
             base.onstateEnter(objs);
             boss.GoToRandomPoint();
         }

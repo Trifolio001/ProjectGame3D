@@ -431,6 +431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collider: {fileID: 808785269745515803}
   StarLife: 5
+  lookAtPlayer: 0
   activeRecoil: 1
   forceRecoil: 1
   animationBase: {fileID: 1693793419296433163}
@@ -440,6 +441,9 @@ MonoBehaviour:
   timeDestroyed: 4
   particleDamage: {fileID: 0}
   _flashcolor: {fileID: 1912311283744850563}
+  tagsToHit:
+  - Player
+  healthBase: {fileID: 0}
   waypoints:
   - {fileID: 6056273236389708736}
   - {fileID: 6056273237098756186}
@@ -469,7 +473,7 @@ MonoBehaviour:
   - {fileID: 7424713598114948931}
   - {fileID: 1866378842277512655}
   color: {r: 1, g: 0, b: 0, a: 1}
-  duration: 0.01
+  duration: 0.2
   colorRenderers:
   - {r: 0, g: 0, b: 0, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}

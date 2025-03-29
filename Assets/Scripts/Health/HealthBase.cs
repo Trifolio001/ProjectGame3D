@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBase : MonoBehaviour
+public class HealthBase : MonoBehaviour, IDamageable
 {
+
+    public UIUpdate uiUpdate;
 
     public int StarLife = 10;
     public int _currentLife;
@@ -12,8 +14,10 @@ public class HealthBase : MonoBehaviour
     public float timeDestroyed = 0.01f;
     public FlashColor _flashcolor;
 
-    public Action<HealthBase> onDamageHit;
-    public Action<HealthBase> onKillHit;
+    public Action<HealthBase> onDamage;
+    public Action<HealthBase> onKill;
+
+    private bool Referencetime = true;
 
     public void Awake()
     {
@@ -28,27 +32,46 @@ public class HealthBase : MonoBehaviour
     {
         _isDead = false;
         _currentLife = StarLife;
+        UpdateUI();
     }
 
 
 
-    public void OnDamage(int damage, Transform pos, bool recoil)
-    {
-        if (_flashcolor != null)
-        {
-            _flashcolor.Flash();
-        }   
+    public void OnDamage(int damage, Transform pos, bool recoil, bool constant)
+    {        
         if (_isDead) return;
-        _currentLife -= damage;
+        onDamage?.Invoke(this);
+        if (constant)
+        {
+            _currentLife -= damage;
+            UpdateUI();
+        }
+        else
+        {
+            if (Referencetime)
+            {
+                _currentLife -= damage;
+                Referencetime = false;
+                Invoke(nameof(OperaçãodeTempo), _flashcolor.duration + 0.1f);
+                UpdateUI();
+            }
+        }
         if (!_isDead)
         {
 
             if (_currentLife <= 0)
             {
-                kill();
+                //kill();
                 _isDead = true;
+                onKill?.Invoke(this);
             }
         }
+    }
+
+
+    public void OperaçãodeTempo()
+    {
+        Referencetime = true;
     }
 
 
@@ -76,12 +99,35 @@ public class HealthBase : MonoBehaviour
     IEnumerator OperaçãodeTempoSumir()
     {
         yield return new WaitForSeconds(timeDestroyed);
-        Destroy(gameObject, 0.001f);
+        Destroy(gameObject, 4f);
     }
 
     [NaughtyAttributes.Button]
     private void SwitchDamage()
     {
-        OnDamage(1, null, false);
+        OnDamage(1, null, false, true);
+    }
+
+    void IDamageable.Damage(int damage)
+    {
+        OnDamage(damage, null, false, true);
+    }
+
+    void IDamageable.Damage(int damage, Transform pos)
+    {
+        OnDamage(damage, null, false, true);
+    }
+
+    void IDamageable.Damage(int damage, Transform pos, bool recoil, bool constant)
+    {
+        OnDamage(damage, null, false, constant);
+    }
+
+    private void UpdateUI()
+    {
+        if (uiUpdate)
+        {
+            uiUpdate.UpdateValue((float)_currentLife / StarLife);
+        }
     }
 }

@@ -30,15 +30,26 @@ namespace Enemy
         private PlayerControl _player;
         public FlashColor _flashcolor;
 
+        public List<string> tagsToHit;
 
-        private void Awake()
+        public HealthBase healthBase;
+
+        private void OnValidate()
         {
-            Init();
+            if (healthBase == null) healthBase = GetComponent<HealthBase>();
             if (_flashcolor == null)
             {
                 _flashcolor = GetComponentInChildren<FlashColor>();
             }
         }
+
+        private void Awake()
+        {
+            OnValidate();
+            Init();
+        }
+
+
 
         private void Start()
         {
@@ -173,7 +184,7 @@ namespace Enemy
 
         }
 
-        public void Damage(int damage, Transform pos, bool recoil)
+        public void Damage(int damage, Transform pos, bool recoil, bool constant)
         {
             OnDamage(damage, pos, recoil);               
         }
@@ -181,11 +192,14 @@ namespace Enemy
 
         private void OnTriggerStay(Collider collision)
         {
-            PlayerControl p = collision.transform.GetComponent<PlayerControl>();
-
-            if(p != null)
+            foreach (var t in tagsToHit)
             {
-                p.Damage(1);
+                IDamageable p = collision.transform.GetComponent<IDamageable>();
+
+                if (p != null)
+                {
+                    p.Damage(1, null, false, false);
+                }
             }
         }
 

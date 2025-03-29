@@ -15,6 +15,7 @@ public class FlashColor : MonoBehaviour
     private int timeMili = 0;
 
     public List<Color> colorRenderers;
+    private List<ColorChange> colorChange;
 
     private void Start()
     {
@@ -32,6 +33,11 @@ public class FlashColor : MonoBehaviour
         {
             meshRenderers.Add(child);
             colorRenderers.Add(child.sharedMaterial.color);
+        }
+        colorChange = new List<ColorChange>();
+        foreach (var child in gameObject.GetComponentsInChildren<ColorChange>())
+        {
+            colorChange.Add(child);
         }
     }
 
@@ -53,22 +59,21 @@ public class FlashColor : MonoBehaviour
         {
             foreach (var s in meshRenderers)
             {
-                s.material.DOColor(color, duration).SetLoops(1, LoopType.Yoyo);
+                s.material.DOColor(color, (duration/2)).SetLoops(2, LoopType.Yoyo);
             }
             timeMili = 10;
             Referencetime = false;
-            Invoke(nameof(OperaçãodeTempo), duration+0.1f);
+            for (int i = 0; i < colorChange.Count; i++)
+            {
+                colorChange[i].InitiateAnimate((duration / 2));
+            }
+            Invoke(nameof(OperaçãodeTempo), duration + 0.1f);
         }
         
     }
 
     public void OperaçãodeTempo()
-    {
-        //Debug.Log("ksdfjngloasnçojnhklojglkmnbklfdklbndfkb");
-        for(int i = 0; i < meshRenderers.Count; i++)
-        {
-            meshRenderers[i].material.color = colorRenderers[i];
-        }         
+    {       
         Referencetime = true;
     }
 

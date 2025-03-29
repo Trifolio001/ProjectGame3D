@@ -9713,7 +9713,7 @@ MonoBehaviour:
   - {fileID: 7595666704728497978}
   - {fileID: 7595666705140307065}
   color: {r: 1, g: 0, b: 0, a: 1}
-  duration: 0.02
+  duration: 0.2
   colorRenderers:
   - {r: 0, g: 0, b: 0, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
@@ -14726,6 +14726,9 @@ MonoBehaviour:
   timeDestroyed: 4
   particleDamage: {fileID: 0}
   _flashcolor: {fileID: 8723909956072574094}
+  tagsToHit:
+  - Player
+  healthBase: {fileID: 0}
   gunBase: {fileID: 3482193687710275511}
 --- !u!114 &8723909955836528064
 MonoBehaviour:

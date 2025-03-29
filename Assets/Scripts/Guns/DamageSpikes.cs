@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class DamageSpikes : MonoBehaviour
 {
+
+    public List<string> tagsToHit;
+
     private void OnTriggerStay(Collider collision)
     {
-        PlayerControl p = collision.transform.GetComponent<PlayerControl>();
-
-        if (p != null)
+        foreach (var t in tagsToHit)
         {
-            p.Damage(1);
+            IDamageable p = collision.transform.GetComponent<IDamageable>();
+
+            if (p != null)
+            {
+                p.Damage(3, null, false, false);
+            }
         }
     }
 }
