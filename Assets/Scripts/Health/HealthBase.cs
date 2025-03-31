@@ -13,11 +13,13 @@ public class HealthBase : MonoBehaviour, IDamageable
     public bool _isDead = false;
     public float timeDestroyed = 0.01f;
     public FlashColor _flashcolor;
+    public bool isPlayer = false;
 
     public Action<HealthBase> onDamage;
     public Action<HealthBase> onKill;
 
     private bool Referencetime = true;
+
 
     public void Awake()
     {
@@ -44,12 +46,15 @@ public class HealthBase : MonoBehaviour, IDamageable
         if (constant)
         {
             _currentLife -= damage;
+            if (isPlayer) { EffectManager.Instance.Shake();  }
             UpdateUI();
         }
         else
         {
             if (Referencetime)
             {
+
+                if (isPlayer) { EffectManager.Instance.Shake(); }
                 _currentLife -= damage;
                 Referencetime = false;
                 Invoke(nameof(OperaçãodeTempo), _flashcolor.duration + 0.1f);

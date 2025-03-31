@@ -21,6 +21,7 @@ public class PlayerControl : MonoBehaviour //, IDamageable
 
 
     [Header("Damage Enimy")]
+    public GameObject bossCamera;
     public float durationStopDamage = 0.2f;
     private float _currentTopSpeed;
     private float _currentNowSpeed;
@@ -49,10 +50,13 @@ public class PlayerControl : MonoBehaviour //, IDamageable
     {
         if (!kill)
         {
+
+            bossCamera.SetActive(false);
+            EffectManager.Instance.ChangeColorGradingIn();
             characterController.enabled = false;
             animator.SetTrigger("Death");
             kill = true;
-            Invoke(nameof(Revive), timeRevavel);
+            StartCoroutine(Revive());
         }
     }
 
@@ -67,9 +71,11 @@ public class PlayerControl : MonoBehaviour //, IDamageable
 
 
     void Update()
+    {
+
+
+        if (!kill)
         {
-
-
             transform.Rotate(0, Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime, 0);
             var inputAxisVertical = Input.GetAxis("Vertical");
             vSpeed -= gravity * Time.deltaTime;
@@ -135,7 +141,8 @@ public class PlayerControl : MonoBehaviour //, IDamageable
             else if (_currentTopSpeed > _currentNowSpeed)
             {
                 _currentNowSpeed += aceleration * Time.deltaTime;
-            } else if ((_currentTopSpeed < _currentNowSpeed))
+            }
+            else if ((_currentTopSpeed < _currentNowSpeed))
             {
                 _currentNowSpeed -= aceleration * Time.deltaTime;
             }
@@ -143,13 +150,19 @@ public class PlayerControl : MonoBehaviour //, IDamageable
             speedVector.y = vSpeed;
             characterController.Move(speedVector * Time.deltaTime);
         }
+    }
 
-    private void Revive()
+    IEnumerator Revive()
     {
+        yield return new WaitForSeconds(timeRevavel);
+        Respaw();
+        yield return new WaitForSeconds(timeRevavel);
+        CheckPointManager.Instance.AnimatedCheckPoint();
+        EffectManager.Instance.ChangeColorGradingOut();
         kill = false;
         healthBase.ResetLife();
         animator.SetTrigger("Revival");
-        Respaw();
+        
     }
 
     [NaughtyAttributes.Button]

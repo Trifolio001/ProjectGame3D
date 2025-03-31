@@ -28,4 +28,10 @@ public class CheckPointManager : Singleton<CheckPointManager>
         checkpoint.RevavelPlayer();
         return checkpoint.transform.position;
     }
+
+    public void AnimatedCheckPoint()
+    {
+        var checkpoint = checkpoints.Find(i => i.key == lastCheckPointkey);
+        checkpoint.RevavelPlayer();
+    }
 }
