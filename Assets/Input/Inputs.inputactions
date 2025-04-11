@@ -6,7 +6,7 @@
             "id": "5e2fc7ce-9e4f-4d61-91b5-f7f936b63b82",
             "actions": [
                 {
-                    "name": "Shoot1",
+                    "name": "Action1",
                     "type": "Button",
                     "id": "168e150c-701b-4df4-b01b-8b7957185730",
                     "expectedControlType": "Button",
@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Gun1",
+                    "name": "Slot1",
                     "type": "Button",
                     "id": "2cf1cbe3-e446-4705-a2b9-58413a287189",
                     "expectedControlType": "Button",
@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Gun2",
+                    "name": "Slot2",
                     "type": "Button",
                     "id": "1f20eddf-57ae-4896-a71b-ceb170d23670",
                     "expectedControlType": "Button",
@@ -30,7 +30,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Gun3",
+                    "name": "Slot3",
                     "type": "Button",
                     "id": "0c8a0fbc-39c4-43a3-8419-32b984812760",
                     "expectedControlType": "Button",
@@ -46,7 +46,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Shoot1",
+                    "action": "Action1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -57,7 +57,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Gun1",
+                    "action": "Slot1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -68,7 +68,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Gun2",
+                    "action": "Slot2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -79,7 +79,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Gun3",
+                    "action": "Slot3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

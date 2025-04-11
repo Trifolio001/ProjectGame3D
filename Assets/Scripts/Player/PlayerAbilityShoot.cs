@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Items;
 
 public class PlayerAbilityShoot : PlayerAbilityBase
 {
@@ -9,71 +10,103 @@ public class PlayerAbilityShoot : PlayerAbilityBase
 
 
     [Header("Guns")]
-    public List<SlotsGuns> ListSlotsGuns;
+
+
+    //public List<SlotsGuns> ListSlotsGuns;
+    public GameObject guns;
+    public int bullets;
 
     public Transform gunPosition;
     private GunBase _currentGun;
-    private GunBase gunBase = null;
+    private LifePack _lifePack;
+    private GameObject ObjectBase = null;
+    private ItemType refItem;
 
 
     protected override void Init()
     {
-        gunBase = null;
+        ObjectBase = null;
         base.Init();
 
-        inputs.GamePlay.Shoot1.performed += ctx => StartShoot();
-        inputs.GamePlay.Shoot1.canceled += ctx => CancelShoot();
+        inputs.GamePlay.Action1.performed += ctx => StartShoot();
+        inputs.GamePlay.Action1.canceled += ctx => CancelShoot();
 
-        inputs.GamePlay.Gun1.performed += ctx => GunSelect(1);
-        inputs.GamePlay.Gun2.performed += ctx => GunSelect(2);
-        inputs.GamePlay.Gun3.performed += ctx => GunSelect(3);
+        //inputs.GamePlay.Slot1.performed += ctx => SlotSelect(1);
+        //inputs.GamePlay.Slot2.performed += ctx => SlotSelect(2);
+        //inputs.GamePlay.Slot3.performed += ctx => SlotSelect(3);
     }
 
 
-
-    private void GunSelect(int n)
+    public void SlotSelect(ItemSlots items)
     {
-        if (gunBase != null)
+        if (ObjectBase != null)
         {
-            Destroy(_currentGun.gameObject);
+            Item_manager.Instance.UpdateBullet(bullets ,refItem);
+            if(_currentGun != null)
+                Destroy(_currentGun.gameObject);
+            if (_lifePack != null)
+                Destroy(_lifePack.gameObject);
+            ObjectBase = null; 
+            _currentGun = null;
         }
-        if (ListSlotsGuns[n-1].guns != null)
+        if (items.refObjects != null)
         {
-            gunBase = ListSlotsGuns[n - 1].guns;
-            CreateGun(ListSlotsGuns[n - 1].bullets, (n - 1));
+            refItem = items.itemTipe;
+            ObjectBase = items.refObjects;
+            bullets = items.bullet;
+            CreateGun(bullets);
         }
     }
 
-    private void CreateGun(int bullet, int num)
+    private void CreateGun(int bullet)
     {
-        _currentGun = Instantiate(gunBase, gunPosition);
-        _currentGun.transform.localPosition = _currentGun.transform.localEulerAngles = Vector3.zero;
-        _currentGun.StartGun(bullet, this, num);
+        Instantiate(ObjectBase, gunPosition);
+        foreach (var child in gameObject.GetComponentsInChildren<GunBase>())
+        {
+            _currentGun = child;
+            _currentGun.transform.localPosition = _currentGun.transform.localEulerAngles = Vector3.zero;
+            _currentGun.StartGun(bullet, this);
+        }
+        foreach (var child in gameObject.GetComponentsInChildren<LifePack>())
+        {
+            _lifePack = child;
+            _lifePack.transform.localPosition = _lifePack.transform.localEulerAngles = Vector3.zero;            
+        }
     }
 
 
     private void StartShoot()
     {
-        if(gunBase != null)
+        if(_currentGun != null)
         {
             _currentGun.startShoot();
+        }
+        if (_lifePack != null)
+        {
+            RecoverLife();
         }
     }
 
     private void CancelShoot()
     {
-        if (gunBase != null)
+        if (_currentGun != null)
         {
             _currentGun.stopShoot();
         }
     }
 
-    [System.Serializable]
+    private void RecoverLife()
+    {
+        Item_manager.Instance.RemoveByType(ItemType.LIFE_PACK);
+        player.healthBase.ResetLife();
+    }
+
+    /*[System.Serializable]
     public class SlotsGuns
     {
         public GunBase guns;
         public int bullets;
-    }
+    }*/
 
 
 }

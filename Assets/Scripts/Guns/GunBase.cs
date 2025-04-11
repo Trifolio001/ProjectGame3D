@@ -34,7 +34,7 @@ public class GunBase : MonoBehaviour
         //projectile.side = PlayerSideReference.transform.localScale.x;
     }
 
-    public virtual void StartGun(int bullet, PlayerAbilityShoot reference, int posGun)
+    public virtual void StartGun(int bullet, PlayerAbilityShoot reference)
     {
 
     }

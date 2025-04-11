@@ -34,7 +34,7 @@ public class GunShootLimit : GunBase
                 _currentShots++;
                 if (playershot != null)
                 {
-                    playershot.ListSlotsGuns[referenceSlot].bullets = _currentShots;
+                    playershot.bullets = _currentShots;
                 }
                 CheckReCharge(); 
                 UpdateUi();
@@ -71,17 +71,16 @@ public class GunShootLimit : GunBase
 
         if (playershot != null)
         {
-            playershot.ListSlotsGuns[referenceSlot].bullets = 0;
+            playershot.bullets = 0;
         }
         recharging = false;
     }
 
-    public override void StartGun(int bullet, PlayerAbilityShoot reference, int posGun)
+    public override void StartGun(int bullet, PlayerAbilityShoot reference)
     {
         _currentShots = bullet;
         playershot = reference;
-        referenceSlot = posGun;
-        CheckReCharge();
+        CheckReCharge(); 
         ShootCoroutine(); 
         UpdateUi();
     }

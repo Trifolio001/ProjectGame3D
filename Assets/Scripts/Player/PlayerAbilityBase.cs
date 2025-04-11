@@ -33,6 +33,7 @@ public class PlayerAbilityBase : MonoBehaviour
     {
         inputs.Disable();
     }
+
     private void OnDestroy()
     {
         RemoveListeners();

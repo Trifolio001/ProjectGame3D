@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cafb772b2fa36e46a127801e7b8861f, type: 3}
-  m_Name: New SO Player Setup
+  m_Name: Player Setup
   m_EditorClassIdentifier: 
   playerLegs: {fileID: 0}
   Startlife: 20

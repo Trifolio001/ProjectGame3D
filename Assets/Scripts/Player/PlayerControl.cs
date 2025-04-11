@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour //, IDamageable
+public class PlayerControl : MonoBehaviour  //, IDamageable
 {
     public CharacterController characterController;
     public float aceleration = 1f;
@@ -116,7 +116,7 @@ public class PlayerControl : MonoBehaviour //, IDamageable
                 animator.SetBool("run", true);
                 if (Input.GetKey(keyRun))
                 {
-                    _currentTopSpeed = speed * speedRun;
+                    _currentTopSpeed = speed * speedRun; 
                     animator.speed = speedRun;
                 }
                 else
