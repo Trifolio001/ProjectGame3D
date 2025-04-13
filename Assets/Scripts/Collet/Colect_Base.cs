@@ -40,8 +40,12 @@ namespace Items
             {
                 graphicItem.SetActive(false);
             }
+            foreach (var child in gameObject.GetComponentsInChildren<SphereCollider>())
+            {
+                child.enabled = (false);
+            }
 
-            Invoke("HideObject", timeToHide);
+            StartCoroutine(HideObject());
             OnCollect();
         }
 
@@ -65,9 +69,10 @@ namespace Items
             }
         }
 
-        private void HideObject()
+        IEnumerator HideObject()
         {
-            gameObject.SetActive(false);
+            yield return new WaitForSeconds(timeToHide);
+            Destroy(gameObject);
         }
 
     }

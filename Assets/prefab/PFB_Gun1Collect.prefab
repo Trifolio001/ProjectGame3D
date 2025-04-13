@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 3179199106930562310}
   - component: {fileID: 4138125000502628215}
   m_Layer: 0
-  m_Name: Gun1
+  m_Name: PFB_Gun1Collect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.56
+  m_Radius: 2.36
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4138125000502628215
 MonoBehaviour:
@@ -113,7 +113,7 @@ MonoBehaviour:
   compareTag: Player
   particlesystem: {fileID: 0}
   timeToHide: 2
-  graphicItem: {fileID: 3179199106930562308}
+  graphicItem: {fileID: 2554312090688096745}
   audioSource: {fileID: 0}
 --- !u!1 &4564037177966948528
 GameObject:

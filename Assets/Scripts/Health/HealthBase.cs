@@ -38,6 +38,10 @@ public class HealthBase : MonoBehaviour, IDamageable
     }
 
 
+   /* public void OnDamage()
+    {
+
+    }*/
 
     public void OnDamage(int damage, Transform pos, bool recoil, bool constant)
     {        

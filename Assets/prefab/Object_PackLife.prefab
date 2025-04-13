@@ -44,7 +44,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.56
+  m_Radius: 2.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4306593241147732067
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   compareTag: Player
   particlesystem: {fileID: 0}
   timeToHide: 2
-  graphicItem: {fileID: 3366244739811633680}
+  graphicItem: {fileID: 6152309339477561216}
   audioSource: {fileID: 0}
 --- !u!1 &6152309339477561216
 GameObject:

@@ -49,6 +49,14 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""44726711-9869-44d2-9202-6e7f7faf3362"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -95,6 +103,17 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""action"": ""Slot3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7cf2e5c6-4ff4-4eab-90f7-6e8b591c3aa0"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -107,6 +126,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_GamePlay_Slot1 = m_GamePlay.FindAction("Slot1", throwIfNotFound: true);
         m_GamePlay_Slot2 = m_GamePlay.FindAction("Slot2", throwIfNotFound: true);
         m_GamePlay_Slot3 = m_GamePlay.FindAction("Slot3", throwIfNotFound: true);
+        m_GamePlay_interaction = m_GamePlay.FindAction("interaction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -160,6 +180,7 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_Slot1;
     private readonly InputAction m_GamePlay_Slot2;
     private readonly InputAction m_GamePlay_Slot3;
+    private readonly InputAction m_GamePlay_interaction;
     public struct GamePlayActions
     {
         private @Inputs m_Wrapper;
@@ -168,6 +189,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         public InputAction @Slot1 => m_Wrapper.m_GamePlay_Slot1;
         public InputAction @Slot2 => m_Wrapper.m_GamePlay_Slot2;
         public InputAction @Slot3 => m_Wrapper.m_GamePlay_Slot3;
+        public InputAction @interaction => m_Wrapper.m_GamePlay_interaction;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -189,6 +211,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Slot3.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnSlot3;
                 @Slot3.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnSlot3;
                 @Slot3.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnSlot3;
+                @interaction.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteraction;
+                @interaction.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteraction;
+                @interaction.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteraction;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -205,6 +230,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Slot3.started += instance.OnSlot3;
                 @Slot3.performed += instance.OnSlot3;
                 @Slot3.canceled += instance.OnSlot3;
+                @interaction.started += instance.OnInteraction;
+                @interaction.performed += instance.OnInteraction;
+                @interaction.canceled += instance.OnInteraction;
             }
         }
     }
@@ -215,5 +243,6 @@ public class @Inputs : IInputActionCollection, IDisposable
         void OnSlot1(InputAction.CallbackContext context);
         void OnSlot2(InputAction.CallbackContext context);
         void OnSlot3(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
     }
 }
