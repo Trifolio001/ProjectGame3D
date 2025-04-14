@@ -34,11 +34,11 @@ namespace Items
         public PlayerControl player;
         public PlayerAbilityShoot playerC;
         protected Inputs inputs;
-        private int ContSlots = -5;
+        private int ContSlots = 0;
 
         private void Start()
         {
-            ContSlots = -5;
+            ContSlots = 0;
             Reset();
             inputs = new Inputs();
             inputs.Enable();
@@ -51,7 +51,8 @@ namespace Items
             inputs.GamePlay.Slot1.performed += ctx => SlotSelect(0);
             inputs.GamePlay.Slot2.performed += ctx => SlotSelect(1);
             inputs.GamePlay.Slot3.performed += ctx => SlotSelect(2);
-            SlotSelect(0);
+            Slots = 0;
+            slotVisualObject(0);
         }
 
         private void SlotSelect(int n)
@@ -80,16 +81,9 @@ namespace Items
             playerC.SlotSelect(a);
         }
 
-        public ItemInSlots GetItemByType(ItemType itemType)
+        public ItemInSlots GetItemByType(ItemType itemType, int i)
         {
-
-            ContSlots += 1;
-            if (ContSlots < 0)
-            {
-                ContSlots = 0;
-            }
-            return itemInSlots[ContSlots];
-                //itemInSlots.Find(i => i.itemTipe == itemType);
+            return itemInSlots[i];
         }
 
         public void AddByType(ItemType itemType, int ammount = 1)

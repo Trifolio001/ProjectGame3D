@@ -4902,7 +4902,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7804652175407282959}
   - component: {fileID: 7804652175407282957}
-  - component: {fileID: 7804652175407282956}
   - component: {fileID: 7804652175407282946}
   - component: {fileID: 7804652175407282947}
   m_Layer: 10
@@ -4941,7 +4940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b15ce8ef31bf2346ae08dc625bce7f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBase: {fileID: 7804652175407282956}
+  healthBase: {fileID: 0}
   meshRenderers:
   - {fileID: 574163961169630754}
   particleDamage: {fileID: 7804652174811774183}
@@ -4950,25 +4949,6 @@ MonoBehaviour:
   coinPrefab: {fileID: 2587062659250534299, guid: 7b2012e8c449e254783aa253fd384601, type: 3}
   dropPosition: {fileID: 7804652175397937197}
   graphicItem: {fileID: 7804652175407282958}
---- !u!114 &7804652175407282956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7804652175407282958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2cc4268469525546bd63e195c15a584, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiUpdate: {fileID: 0}
-  StarLife: 5
-  _currentLife: 0
-  _isDead: 1
-  timeDestroyed: 0.01
-  _flashcolor: {fileID: 0}
-  isPlayer: 0
 --- !u!65 &7804652175407282946
 BoxCollider:
   m_ObjectHideFlags: 0

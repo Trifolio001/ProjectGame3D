@@ -29,11 +29,13 @@ namespace Items {
 
         private void CreateItens()
         {
+            int slot = 0;
             foreach(var setup in Item_manager.Instance.itemInSlots)
             {
-                var item = Instantiate(prefabLeyout, container); 
-                item.Load(Item_manager.Instance.GetItemByType(ItemType.NULL));
+                var item = Instantiate(prefabLeyout, container);
+                item.Load(Item_manager.Instance.GetItemByType(ItemType.NULL, slot));
                 itenLayout.Add(item);
+                slot++;
             }
         }
     } 
