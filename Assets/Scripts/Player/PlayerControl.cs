@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cloth;
+using DG.Tweening;
 
 public class PlayerControl : MonoBehaviour  //, IDamageable
 {
@@ -30,7 +32,12 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
     public List<FlashColor> flashcolor;
     public float timeRevavel = 3f;
 
+    [Space]
+    [SerializeField] private ClothChanger _clothChanger;
+
     private bool kill = false;
+
+    private float _speed = 1f;
 
     private void OnValidate()
     {
@@ -43,6 +50,9 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
 
         healthBase.onDamage += Damage;
         healthBase.onKill += OnKill;
+
+        _speed = speed;
+        InicialCloth(ClothType.NULL);
     }
 
 
@@ -107,32 +117,7 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
 
             //animator.SetBool("run", inputAxisVertical != 0);
 
-
-            var isWalking = inputAxisVertical != 0;
-            if (isWalking)
-            {
-                if (characterController.isGrounded)
-                    AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.RUN);
-                animator.SetBool("run", true);
-                if (Input.GetKey(keyRun))
-                {
-                    _currentTopSpeed = speed * speedRun; 
-                    animator.speed = speedRun;
-                }
-                else
-                {
-                    _currentTopSpeed = speed;
-                    animator.speed = 1;
-                }
-
-            }
-            else
-            {
-                animator.SetBool("run", false);
-                if (characterController.isGrounded)
-                    AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.IDLE);
-                _currentTopSpeed = 0;
-            }
+            walkPlayer(inputAxisVertical);
 
             if ((aceleration <= 0) && _currentTopSpeed == 0)
             {
@@ -150,6 +135,37 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
             speedVector.y = vSpeed;
             characterController.Move(speedVector * Time.deltaTime);
         }
+    }
+
+    private void walkPlayer(float inputAxisVertical)
+    {
+        var isWalking = inputAxisVertical != 0;
+        if (isWalking)
+        {
+            if (characterController.isGrounded)
+                AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.RUN);
+            animator.SetBool("run", true);
+            if (Input.GetKey(keyRun))
+            {
+                _currentTopSpeed = speed * speedRun;
+                animator.speed = (speed * speedRun) / _speed;
+                Debug.Log("anim " + (speedRun/ _speed));
+            }
+            else
+            {
+                _currentTopSpeed = speed;
+                animator.speed =  speed / _speed;
+            }
+
+        }
+        else
+        {
+            animator.SetBool("run", false);
+            if (characterController.isGrounded)
+                AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.IDLE);
+            _currentTopSpeed = 0;
+        }
+
     }
 
     IEnumerator Revive()
@@ -209,5 +225,66 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
             ReferencetimeDamage = false;
         }*/
         #endregion
-    
+
+    private void InicialCloth(ClothType Type)
+    {
+        ClothSetup setup = ClothManager.Instance.GetSetupByType(Type);
+        _clothChanger.ChangeTexture(setup); 
+        foreach (var child in gameObject.GetComponentsInChildren<ClothChanger>())
+        {
+            child.DefaultTextureSave();
+        }        
+    }
+
+    public void ChangeSpeed(float speed, float duration)
+    {
+        StartCoroutine(ChangeSpeedCourotine(speed, duration));
+    }
+
+    IEnumerator ChangeSpeedCourotine(float localSpeed, float duration)
+    {
+        var defaultspeed = speed;
+        var defaultspeedRun = speedRun;
+        speed = localSpeed;
+        speedRun = localSpeed;
+        walkPlayer(Input.GetAxis("Vertical"));
+        yield return new WaitForSeconds(duration);
+        speed = defaultspeed;
+        speedRun = defaultspeedRun;
+        walkPlayer(Input.GetAxis("Vertical"));
+    }
+
+    public void ChangeTexture(ClothSetup setup, float duration)
+    {
+        if (duration == 0)
+        {
+            InicialCloth(setup.clothType);
+        }
+        else
+        {
+            StartCoroutine(ChangeTextureCourotine(setup, duration));
+        }
+    }
+
+    IEnumerator ChangeTextureCourotine(ClothSetup setup, float duration)
+    {
+        _clothChanger.ChangeTexture(setup);
+        if (setup.Visual != null)
+        {
+            setup.Visual.SetActive(true);
+            setup.Visual.transform.localScale = Vector3.zero; 
+            setup.Visual.transform.DOScale(1, 0.5f).SetEase(Ease.InFlash);
+        }
+        yield return new WaitForSeconds(duration);
+        if (setup.Visual != null)
+        {
+            setup.Visual.transform.DOScale(Vector3.zero, 2f).SetEase(Ease.OutBounce);
+        }
+        _clothChanger.ResetTexture();
+        if (setup.Visual != null)
+        {
+            yield return new WaitForSeconds(2f);
+            setup.Visual.SetActive(false);
+        }
+    }
 }

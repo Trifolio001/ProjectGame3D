@@ -33,8 +33,10 @@ namespace Items
         public ItenLeyoutManager itenLeyoutManager;
         public PlayerControl player;
         public PlayerAbilityShoot playerC;
+
         protected Inputs inputs;
         private int ContSlots = 0;
+        private int MultiplyCoin = 1;
 
         private void Start()
         {
@@ -93,7 +95,7 @@ namespace Items
             var veritemSlot = itemOutSlots.Find(i => i.itemTipe == itemType);
             if (veritemSlot != null)
             {
-                veritemSlot.soValue.value += ammount;
+                veritemSlot.soValue.value += ammount * MultiplyCoin;
             }
             else
             {
@@ -161,6 +163,18 @@ namespace Items
             itemSlot.Find(i => i.itemTipe == itemType).bullet = bullet;
         }
 
+
+        public void ChangeCoinvalue(int CoinMultiply, float duration)
+        {
+            StartCoroutine(ChangeCoinvalueCourotine(CoinMultiply, duration));
+        }
+
+        IEnumerator ChangeCoinvalueCourotine(int CoinMultiply, float duration)
+        {
+            MultiplyCoin = CoinMultiply;
+            yield return new WaitForSeconds(duration);
+            MultiplyCoin = 1;
+        }
     }
 
     [System.Serializable]

@@ -2,18 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cloth;
 
 public class HealthBase : MonoBehaviour, IDamageable
 {
 
     public UIUpdate uiUpdate;
 
-    public int StarLife = 10;
-    public int _currentLife;
+    public float StarLife = 10;
+    public float _currentLife;
     public bool _isDead = false;
     public float timeDestroyed = 0.01f;
     public FlashColor _flashcolor;
     public bool isPlayer = false;
+
+    public float damageMultiply = 1;
 
     public Action<HealthBase> onDamage;
     public Action<HealthBase> onKill;
@@ -43,13 +46,13 @@ public class HealthBase : MonoBehaviour, IDamageable
 
     }*/
 
-    public void OnDamage(int damage, Transform pos, bool recoil, bool constant)
+    public void OnDamage(float damage, Transform pos, bool recoil, bool constant)
     {        
         if (_isDead) return;
         onDamage?.Invoke(this);
         if (constant)
         {
-            _currentLife -= damage;
+            _currentLife -= damage * damageMultiply;
             if (isPlayer) { EffectManager.Instance.Shake();  }
             UpdateUI();
         }
@@ -59,7 +62,7 @@ public class HealthBase : MonoBehaviour, IDamageable
             {
 
                 if (isPlayer) { EffectManager.Instance.Shake(); }
-                _currentLife -= damage;
+                _currentLife -= damage * damageMultiply; ;
                 Referencetime = false;
                 Invoke(nameof(OperaçãodeTempo), _flashcolor.duration + 0.1f);
                 UpdateUI();
@@ -138,5 +141,18 @@ public class HealthBase : MonoBehaviour, IDamageable
         {
             uiUpdate.UpdateValue((float)_currentLife / StarLife);
         }
+    }
+
+
+    public void ChangeStrong(float DamageM, float duration)
+    {
+        StartCoroutine(ChangeStrongCourotine(DamageM, duration));
+    }
+
+    IEnumerator ChangeStrongCourotine(float DamageM, float duration)
+    {
+        damageMultiply = DamageM;
+        yield return new WaitForSeconds(duration);
+        damageMultiply = 1;
     }
 }
