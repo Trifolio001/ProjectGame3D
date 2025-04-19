@@ -34,10 +34,12 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
 
     [Space]
     [SerializeField] private ClothChanger _clothChanger;
+    public AnimParticlePlayer animationParticles;
 
     private bool kill = false;
 
     private float _speed = 1f;
+    private bool _Ground = false;
 
     private void OnValidate()
     {
@@ -51,6 +53,7 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
         healthBase.onDamage += Damage;
         healthBase.onKill += OnKill;
 
+        _Ground = false;
         _speed = speed;
         InicialCloth(ClothType.NULL);
     }
@@ -92,6 +95,13 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
 
             if (characterController.isGrounded)
             {
+                if (!_Ground)
+                {
+                    if(animationParticles != null)
+                    animationParticles.ParticleDownJumpLand();
+                    _Ground = true;
+                }
+                
                 animator.SetBool("ground", true);
                 vSpeed = -gravity;
                 if (Input.GetKeyDown(jumpKeycode))
@@ -111,6 +121,7 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
                 {
                     AnimatorManagerPlayer.Instance.stateMachines.Switchstate(AnimatorManagerPlayer.AnimationType.JUMPDOWN);
                     animator.SetBool("downjump", true);
+                    _Ground = false;
                 }
             }
 
@@ -149,7 +160,6 @@ public class PlayerControl : MonoBehaviour  //, IDamageable
             {
                 _currentTopSpeed = speed * speedRun;
                 animator.speed = (speed * speedRun) / _speed;
-                Debug.Log("anim " + (speedRun/ _speed));
             }
             else
             {

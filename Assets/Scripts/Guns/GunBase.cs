@@ -20,7 +20,7 @@ public class GunBase : MonoBehaviour
     {
         while (true)
         {
-            Shoot();
+            Shoot(); 
             yield return new WaitForSeconds(timeBetweenShoot);
         }
     }
@@ -30,7 +30,7 @@ public class GunBase : MonoBehaviour
         var projectile = Instantiate(prefabProjetil);
         projectile.transform.position = positionToShoot.position;
         projectile.transform.rotation = positionToShoot.rotation;
-        projectile.speed = speed;
+        projectile.speed = speed; 
         //projectile.side = PlayerSideReference.transform.localScale.x;
     }
 
@@ -52,6 +52,8 @@ public class GunBase : MonoBehaviour
             StopCoroutine(_currentCoroutine);
         }
     }
+
+
 
 
 }

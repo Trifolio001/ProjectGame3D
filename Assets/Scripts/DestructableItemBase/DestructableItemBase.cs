@@ -47,15 +47,15 @@ public class DestructableItemBase : MonoBehaviour, IDamageable
         }
     }
 
-    public void Damage(int damage)
+    public void Damage(float damage)
     {
     }
 
-    public void Damage(int damage, Transform pos)
+    public void Damage(float damage, Transform pos)
     {
     }
 
-    public void Damage(int damage, Transform pos, bool recoil, bool constant)
+    public void Damage(float damage, Transform pos, bool recoil, bool constant)
     {
         if(0 <= savedCoins)
         {

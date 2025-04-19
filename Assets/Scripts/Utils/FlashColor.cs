@@ -86,6 +86,5 @@ public class FlashColor : MonoBehaviour
             color.a = alpha; 
             i.color = color; 
         });*/
-
     }
 }

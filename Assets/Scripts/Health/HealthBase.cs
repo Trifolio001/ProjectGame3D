@@ -49,6 +49,7 @@ public class HealthBase : MonoBehaviour, IDamageable
     public void OnDamage(float damage, Transform pos, bool recoil, bool constant)
     {        
         if (_isDead) return;
+        if(damage > 0)
         onDamage?.Invoke(this);
         if (constant)
         {
@@ -60,12 +61,15 @@ public class HealthBase : MonoBehaviour, IDamageable
         {
             if (Referencetime)
             {
-
-                if (isPlayer) { EffectManager.Instance.Shake(); }
+                if ((isPlayer)&&(damage>0)) { EffectManager.Instance.Shake(); }
                 _currentLife -= damage * damageMultiply; ;
                 Referencetime = false;
                 Invoke(nameof(OperaçãodeTempo), _flashcolor.duration + 0.1f);
                 UpdateUI();
+            }
+            if (_currentLife >= StarLife)
+            {
+                _currentLife = StarLife;
             }
         }
         if (!_isDead)
@@ -120,17 +124,17 @@ public class HealthBase : MonoBehaviour, IDamageable
         OnDamage(1, null, false, true);
     }
 
-    void IDamageable.Damage(int damage)
+    void IDamageable.Damage(float damage)
     {
         OnDamage(damage, null, false, true);
     }
 
-    void IDamageable.Damage(int damage, Transform pos)
+    void IDamageable.Damage(float damage, Transform pos)
     {
         OnDamage(damage, null, false, true);
     }
 
-    void IDamageable.Damage(int damage, Transform pos, bool recoil, bool constant)
+    void IDamageable.Damage(float damage, Transform pos, bool recoil, bool constant)
     {
         OnDamage(damage, null, false, constant);
     }

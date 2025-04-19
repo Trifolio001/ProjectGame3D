@@ -11,7 +11,7 @@ namespace Enemy
         public Collider collider;
         //public FlashColor flashColor;
         public int StarLife = 10;
-        private int _currentLife;
+        private float _currentLife;
         protected bool _isDead = false;
         public bool lookAtPlayer = false;
 
@@ -72,7 +72,7 @@ namespace Enemy
 
 
 
-        public void OnDamage(int damage, Transform pos, bool recoil)
+        public void OnDamage(float damage, Transform pos, bool recoil)
         {
             if (_flashcolor != null)
             {
@@ -175,16 +175,16 @@ namespace Enemy
             animationBase.PlayAnimationByTrigger(animationTipe);
         }
 
-        public void Damage(int damage)
+        public void Damage(float damage)
         {
 
         }
-        public void Damage(int damage, Transform pos)
+        public void Damage(float damage, Transform pos)
         {
 
         }
 
-        public void Damage(int damage, Transform pos, bool recoil, bool constant)
+        public void Damage(float damage, Transform pos, bool recoil, bool constant)
         {
             OnDamage(damage, pos, recoil);               
         }

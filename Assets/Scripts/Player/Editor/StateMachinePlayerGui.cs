@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 //using Ebac.StateMachine;
 
-[CustomEditor(typeof(AnimatorManagerPlayer))]
+//[CustomEditor(typeof(AnimatorManagerPlayer))]
 public class StateMachinePlayerGui : Editor
 {
     public bool showFolDout;

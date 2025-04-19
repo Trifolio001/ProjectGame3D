@@ -99,6 +99,7 @@ public class PlayerAbilityShoot : PlayerAbilityBase
     {
         Item_manager.Instance.RemoveByType(ItemType.LIFE_PACK);
         player.healthBase.ResetLife();
+        VFXLifePack();
     }
 
     /*[System.Serializable]
@@ -108,5 +109,9 @@ public class PlayerAbilityShoot : PlayerAbilityBase
         public int bullets;
     }*/
 
+    public void VFXLifePack()
+    {
+        VFXManeger.Instance.PlayVFXByTipe(VFXManeger.VFXType.HEARTPLAYER, transform.position, transform.rotation);
+    }
 
 }
